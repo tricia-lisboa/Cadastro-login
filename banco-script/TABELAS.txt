@@ -1,0 +1,4 @@
+TABELAS
+
+
+id, nome, email, cpf, telefone, endereco, data_nascimento, sexo, quantidade_comodos, estado_civil, tipo_casa, localizacao, senha
