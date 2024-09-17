@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom'; // Importando useNavigate
+import './Dados.css'; 
 
 const Usuarios = () => {
   const [usuarios, setUsuarios] = useState([]);
@@ -16,7 +18,8 @@ const Usuarios = () => {
   const [localizacao, setLocalizacao] = useState('');
   const [senha, setSenha] = useState('');
 
-  // Buscar usuários do backend
+  const navigate = useNavigate();
+
   useEffect(() => {
     axios.get('http://localhost:3001/api/usuarios')
       .then(response => {
@@ -27,7 +30,6 @@ const Usuarios = () => {
       });
   }, []);
 
-  // Adicionar um novo usuário
   const adicionarUsuario = (e) => {
     e.preventDefault();
     const novoUsuario = {
@@ -44,7 +46,7 @@ const Usuarios = () => {
       localizacao,
       senha
     };
-    
+
     axios.post('http://localhost:3001/api/usuarios', novoUsuario)
       .then(response => {
         alert(response.data.message);
@@ -69,116 +71,169 @@ const Usuarios = () => {
   };
 
   return (
-    <div>
-      <h1>Lista de Usuários</h1>
-      <ul>
-        {usuarios.map(usuario => (
-          <li key={usuario.id}>
-            {usuario.nome} - {usuario.email}
-          </li>
-        ))}
-      </ul>
+    <div className="container">
 
-      <h2>Adicionar Usuário</h2>
+       {/* Botão para voltar à página de login */}
+       <button onClick={() => navigate('/')} className="back-button">
+        Voltar ao Login
+      </button>
+
+      <h1>Cadastro</h1>
+
       <form onSubmit={adicionarUsuario}>
-        <input
-          type="text"
-          placeholder="Nome"
-          value={nome}
-          onChange={(e) => setNome(e.target.value)}
-          required
-        />
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
-        <input
-          type="text"
-          placeholder="CPF"
-          value={cpf}
-          onChange={(e) => setCpf(e.target.value)}
-          required
-        />
-        <input
-          type="text"
-          placeholder="Telefone"
-          value={telefone}
-          onChange={(e) => setTelefone(e.target.value)}
-        />
-        <input
-          type="text"
-          placeholder="Endereço"
-          value={endereco}
-          onChange={(e) => setEndereco(e.target.value)}
-        />
-        <input
-          type="date"
-          placeholder="Data de Nascimento"
-          value={dataNascimento}
-          onChange={(e) => setDataNascimento(e.target.value)}
-        />
-        <select
-          value={sexo}
-          onChange={(e) => setSexo(e.target.value)}
-          required
-        >
-          <option value="">Selecione o Sexo</option>
-          <option value="M">Masculino</option>
-          <option value="F">Feminino</option>
-        </select>
-        <select
-          value={quantidadeComodos}
-          onChange={(e) => setQuantidadeComodos(e.target.value)}
-          required
-        >
-          <option value="">Quantidade de Cômodos</option>
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
-          <option value="5">5</option>
-          <option value="6 ou mais">6 ou mais</option>
-        </select>
-        <select
-          value={estadoCivil}
-          onChange={(e) => setEstadoCivil(e.target.value)}
-          required
-        >
-          <option value="">Estado Civil</option>
-          <option value="solteiro">Solteiro</option>
-          <option value="casado">Casado</option>
-          <option value="divorciado">Divorciado</option>
-        </select>
-        <select
-          value={tipoCasa}
-          onChange={(e) => setTipoCasa(e.target.value)}
-          required
-        >
-          <option value="">Tipo de Casa</option>
-          <option value="terreo">Térreo</option>
-          <option value="sobrado">Sobrado</option>
-        </select>
-        <select
-          value={localizacao}
-          onChange={(e) => setLocalizacao(e.target.value)}
-          required
-        >
-          <option value="">Localização</option>
-          <option value="urbano">Urbano</option>
-          <option value="praia">Praia</option>
-          <option value="fazenda">Fazenda</option>
-          <option value="montanha">Montanha</option>
-        </select>
-        <input
-          type="password"
-          placeholder="Senha"
-          value={senha}
-          onChange={(e) => setSenha(e.target.value)}
-          required
-        />
+        <div className="input-group">
+          <div>
+            <label>Nome</label>
+            <input
+              type="text"
+              placeholder="Nome"
+              value={nome}
+              onChange={(e) => setNome(e.target.value)}
+              required
+            />
+          </div>
+          <div>
+            <label>Email</label>
+            <input
+              type="email"
+              placeholder="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+          </div>
+        </div>
+
+        <div className="input-group">
+          <div>
+            <label>CPF</label>
+            <input
+              type="text"
+              placeholder="CPF"
+              value={cpf}
+              onChange={(e) => setCpf(e.target.value)}
+              required
+            />
+          </div>
+          <div>
+            <label>Telefone</label>
+            <input
+              type="text"
+              placeholder="Telefone"
+              value={telefone}
+              onChange={(e) => setTelefone(e.target.value)}
+            />
+          </div>
+        </div>
+
+        <div>
+          <label>Endereço</label>
+          <input
+            type="text"
+            placeholder="Endereço"
+            value={endereco}
+            onChange={(e) => setEndereco(e.target.value)}
+            required
+          />
+        </div>
+
+        <div className="input-group">
+          <div>
+            <label>Data de Nascimento</label>
+            <input
+              type="date"
+              placeholder="Data de Nascimento"
+              value={dataNascimento}
+              onChange={(e) => setDataNascimento(e.target.value)}
+              required
+            />
+          </div>
+          <div>
+            <label>Sexo</label>
+            <select
+              value={sexo}
+              onChange={(e) => setSexo(e.target.value)}
+              required
+            >
+              <option value="">Selecione o Sexo</option>
+              <option value="M">Masculino</option>
+              <option value="F">Feminino</option>
+            </select>
+          </div>
+        </div>
+
+        <div className="select-group">
+          <div>
+            <label>Quantidade de Cômodos</label>
+            <select
+              value={quantidadeComodos}
+              onChange={(e) => setQuantidadeComodos(e.target.value)}
+              required
+            >
+              <option value="">Quantidade de Cômodos</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6 ou mais">6 ou mais</option>
+            </select>
+          </div>
+          <div>
+            <label>Estado Civil</label>
+            <select
+              value={estadoCivil}
+              onChange={(e) => setEstadoCivil(e.target.value)}
+              required
+            >
+              <option value="">Estado Civil</option>
+              <option value="solteiro">Solteiro</option>
+              <option value="casado">Casado</option>
+              <option value="divorciado">Divorciado</option>
+            </select>
+          </div>
+        </div>
+
+        <div className="select-group">
+          <div>
+            <label>Tipo de Casa</label>
+            <select
+              value={tipoCasa}
+              onChange={(e) => setTipoCasa(e.target.value)}
+              required
+            >
+              <option value="">Tipo de Casa</option>
+              <option value="terreo">Térreo</option>
+              <option value="sobrado">Sobrado</option>
+            </select>
+          </div>
+          <div>
+            <label>Localização</label>
+            <select
+              value={localizacao}
+              onChange={(e) => setLocalizacao(e.target.value)}
+              required
+            >
+              <option value="">Localização</option>
+              <option value="urbano">Urbano</option>
+              <option value="praia">Praia</option>
+              <option value="fazenda">Fazenda</option>
+              <option value="montanha">Montanha</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label>Senha</label>
+          <input
+            type="password"
+            placeholder="Senha"
+            value={senha}
+            onChange={(e) => setSenha(e.target.value)}
+            required
+          />
+        </div>
+
         <button type="submit">Adicionar</button>
       </form>
     </div>
